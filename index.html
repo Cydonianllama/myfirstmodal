@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <title>Modal 1</title>
+</head>
+<body>
+    <main class = "container">
+
+        <button class = "btn btn-primary mb-sm" id = "myfirstmodal" >
+            open modal
+        </button>
+
+        <form>
+            <input id="name-product-item_" class = "form-control mb-sm" name = "name-product-form" type="text" placeholder="name product">
+            <input id="quantity-product-item_" class = "form-control mb-sm" name = "quantity-product-form" type="number" >
+            <button id="btn-create-product" class = "btn btn-primary" type="button">create</button>
+        </form>
+
+        <div class = "alert mb-sm">
+
+        </div>
+        <div id = "container-products">
+
+        </div>
+
+    </main>
+
+    <div id="mymodal" class="modal" data-name-modal="myfirstmodal" data-current-active >
+        <div class = "modal__header">
+            <h3 class = "modal__title">edit modal</h3>
+        </div>
+        <div class="modal__body">
+            <form action="">
+                <label class = "form-label mb-sm" for="name-product">name : </label>
+                <input id="modal-name-product" name = "name-product" class = "form-control mb-sm" type="text" placeholder="name product">
+                <label class ="form-label mb-sm"for="quantity">quantity :</label>
+                <input id="modal-quantity-product" name="quantity" class = "form-control mb-sm" type="number" value="0">
+            </form>
+        </div>
+        <div class="modal__footer">
+            <button class="btn btn-danger" id="btn-close">close</button>
+            <button class="btn btn-primary" id="btn-edit-save">edit and save</button>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+
+</body>
+</html>
