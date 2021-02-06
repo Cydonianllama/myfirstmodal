@@ -13,6 +13,8 @@ const modalNameProduct = document.querySelector('#modal-name-product');
 const modalQuantityProduct = document.querySelector('#modal-quantity-product');
 const myModal = document.getElementById('mymodal')
 
+const formCreation = document.getElementById('form-creation');
+
 var arrayProductObject = []
 var arrayProductsComponents = []
 
@@ -24,7 +26,7 @@ const listenerComponentsProduct = () => {
         myModal.dataset.currentActive  = component.dataset.id;
         //set the values in the input
         arrayProductsComponents.forEach( productComponent => {
-            if ( productComponent.id === component.dataset.currentActive ){
+            if ( productComponent.id === component.dataset.id ){
                 modalNameProduct.value = productComponent.name;
                 modalQuantityProduct.value = productComponent.quantity;
             }
@@ -41,12 +43,22 @@ const listenerComponentsProduct = () => {
 
     const toogleComponentAction = (component) => {
         if (component.dataset.active === "false"){
+
+            //styling
+            component.style.backgroundColor = "rgba(0, 0, 0, 0.815)";
+
             //binding
             actionsBinding(component)
+            btnOpenModal.disabled = false;
             component.dataset.active = "true";
         }else{
+
+            //styling
+            component.style.backgroundColor = "black";
+
             //no binding
             actionsNoBinding(component);
+            btnOpenModal.disabled = true;
             component.dataset.active = "false";
         }
     }
@@ -145,6 +157,8 @@ const createProductAction = (event) => {
 
 
     // final render
+    formCreation.reset();
+    nameProductItem.focus();
     renderAllProducts();
 
     event.preventDefault();
@@ -180,21 +194,22 @@ const openModalAction = (event) => {
         })
     }
 
+    const closeAction = () => {
+        //hide the current modal
+        currentItem.classList.add('transition-close');
+        currentItem.classList.remove('transition');
+
+
+        //restore the background of main container
+        main.style.opacity = "1";
+    } 
+
     // 2 - active the close methods
     const activeCloseMethods = () => {
 
         //cached the btn close of the modal
         const btnClose = document.getElementById('btn-close');
-
-        const closeAction = () => {
-            //hide the current modal
-            currentItem.classList.add('transition-close');
-            currentItem.classList.remove('transition');
-            
-
-            //restore the background of main container
-            main.style.opacity = "1";
-        }   
+  
 
         btnClose.addEventListener('click', (event) => {
 
@@ -215,12 +230,13 @@ const openModalAction = (event) => {
                 //the id of the current modal
                 if (modal.dataset.nameModal === idModal){
                     arrayProductsComponents.forEach(comp => {
-                        console.log(modal.dataset.currentActive ,"  -  ",comp.id)
                         if (modal.dataset.currentActive === comp.id){
-                            comp.name = "cocodrilo";
+                            comp.name = modalNameProduct.value;
+                            comp.quantity = modalQuantityProduct.value;
+                            formCreation.reset();
+                            btnOpenModal.disabled = true;
+                            closeAction();
                         }
-
-                        console.log(comp)
                     })
                 }
             });
@@ -245,6 +261,7 @@ const openModalAction = (event) => {
 function listeners(){
     //open modal 
     btnOpenModal.addEventListener('click',openModalAction);
+    //create product
     btnCreateProduct.addEventListener('click',createProductAction);
 }
 
